@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
-import kotlinx.android.synthetic.main.fragment_inread_scrollview.*
 import kotlinx.android.synthetic.main.fragment_inread_webview.*
 import tv.teads.sdk.*
 import tv.teads.sdk.renderer.InReadAdView
@@ -46,7 +45,13 @@ class InReadWebViewFragment : BaseFragment(), SyncAdWebView.Listener {
         // 2. Create the InReadAdPlacement
         adPlacement = TeadsSDK.createInReadPlacement(requireActivity(), pid, placementSettings)
 
-        webviewHelperSynch = SyncAdWebView(requireContext(), webview, this@InReadWebViewFragment, "#teads-placement-slot")
+        webviewHelperSynch = SyncAdWebView(
+            context = requireContext(),
+            webview = webview,
+            listener = this@InReadWebViewFragment,
+            selector = "#teads-placement-slot-mobile-app",
+            topOffSet = 120
+        )
 
         if ((activity as MainActivity).isWebViewDarkTheme
                 && WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
