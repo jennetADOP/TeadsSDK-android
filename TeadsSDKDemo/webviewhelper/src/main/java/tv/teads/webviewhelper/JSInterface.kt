@@ -35,12 +35,12 @@ internal class JSInterface(private val listener: Listener) {
 
     @JavascriptInterface
     fun onSlotStartShow() {
-
+        listener.onSlotShow()
     }
 
     @JavascriptInterface
     fun onSlotStartHide() {
-
+        listener.onSlotHid()
     }
 
     @JavascriptInterface
@@ -58,6 +58,10 @@ internal class JSInterface(private val listener: Listener) {
         fun onSlotUpdated(top: Int, left: Int,
                           bottom: Int, right: Int,
                           pixelRatio: Float)
+
+        fun onSlotShow()
+
+        fun onSlotHid()
 
         fun handleError(error: String)
     }

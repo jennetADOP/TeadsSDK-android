@@ -165,7 +165,7 @@
   var setBridgeHandler = function (wvBridge) {
     tryOrLog(function () {
       bridge = wvBridge;
-      window.utils = {
+      window.teads = {
         insertPlaceholder: insertPlaceholder,
         updatePlaceholder: updatePlaceholder,
         showPlaceholder: showPlaceholder,

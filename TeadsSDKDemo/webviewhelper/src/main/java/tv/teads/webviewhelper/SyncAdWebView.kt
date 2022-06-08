@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import tv.teads.sdk.AdOpportunityTrackerView
@@ -24,12 +25,13 @@ import tv.teads.webviewhelper.baseView.ObservableWebView
  * @param selector The selector where we want insert the ad view
  *
  */
-class SyncAdWebView(context: Context,
-                    private val webview: ObservableWebView,
-                    private val listener: Listener,
-                    selector: String,
-                    private val topOffSet: Int = 0,
-                    private val bottomOffSet: Int = 0,
+class SyncAdWebView(
+    context: Context,
+    private val webview: ObservableWebView,
+    private val listener: Listener,
+    selector: String,
+    private val topOffSet: Int = 0,
+    private val bottomOffSet: Int = 0,
 ) : WebViewHelper.Listener, ObservableWebView.OnScrollListener, ObservableContainerAdView.ActionMoveListener {
 
 
@@ -39,6 +41,7 @@ class SyncAdWebView(context: Context,
      * Layout containing the ad and the webview
      */
     private lateinit var container: FrameLayout
+    private lateinit var adLayer: FrameLayout
     private val containerAdView: ObservableContainerAdView = ObservableContainerAdView(context)
 
     private val webviewHelper: WebViewHelper
@@ -87,21 +90,24 @@ class SyncAdWebView(context: Context,
 
             container.addView(webview)
 
-            val adLayer = FrameLayout(webview.context).apply {
+            adLayer = FrameLayout(webview.context).apply {
                 layoutParams = FrameLayout.LayoutParams(webview.layoutParams).also {
                     it.topMargin = topOffSet
                     it.bottomMargin = bottomOffSet
                 }
-
                 addView(containerAdView)
             }
 
             container.addView(adLayer)
             webViewParent.addView(container, webviewPosition)
-            listener.onHelperReady(container)
+
+//            listener.onHelperReady(container) todo temp
         }
     }
 
+    fun initContainer() {
+        listener.onHelperReady(container)
+    }
 
     fun registerAdView(adView: ViewGroup) {
         containerAdView.addView(adView, 0)
@@ -158,11 +164,21 @@ class SyncAdWebView(context: Context,
         }
     }
 
+    override fun onSlotShow() {
+        containerAdView.visibility = View.VISIBLE
+        Log.d(TAG, "onSlotChange: onSlotShow")
+    }
+
+    override fun onSlotHid() {
+        containerAdView.visibility = View.GONE
+        Log.d(TAG, "onSlotChange: onSlotHid")
+    }
+
     override fun onError(error: String) {
         Log.w(TAG, "An Error occurs during the webview slot managment")
     }
 
-    fun updateSlot(ratio: Float?) {
+    fun updateSlot(ratio: Float? = null) {
         if (ratio != null) {
             webviewHelper.updateSlot(ratio, 0)
         }

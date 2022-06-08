@@ -60,6 +60,16 @@ class InReadWebViewFragment : BaseFragment(), SyncAdWebView.Listener {
         webview.settings.javaScriptEnabled = true
         webview.webViewClient = CustomInReadWebviewClient(webviewHelperSynch, getTitle())
         webview.loadUrl(this.webViewUrl)
+
+        // todo temp
+        btnInit.setOnClickListener {
+            webviewHelperSynch.initContainer()
+        }
+
+        // todo temp
+        btnRemove.setOnClickListener {
+            webviewHelperSynch.closeAd()
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

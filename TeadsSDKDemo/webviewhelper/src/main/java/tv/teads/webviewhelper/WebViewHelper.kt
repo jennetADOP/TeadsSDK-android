@@ -165,6 +165,14 @@ private constructor(builder: Builder) : JSInterface.Listener {
         requestSlotTimeout.cancel()
     }
 
+    override fun onSlotShow() {
+        listener?.onSlotShow()
+    }
+
+    override fun onSlotHid() {
+        listener?.onSlotHid()
+    }
+
     override fun handleError(error: String) {
         listener?.onError(error)
     }
@@ -207,6 +215,10 @@ private constructor(builder: Builder) : JSInterface.Listener {
 
         fun onSlotUpdated(left: Int, top: Int, right: Int, bottom: Int)
 
+        fun onSlotShow()
+
+        fun onSlotHid()
+
         fun onError(error: String)
     }
 
@@ -214,14 +226,14 @@ private constructor(builder: Builder) : JSInterface.Listener {
 
         private val TAG = WebViewHelper::class.java.simpleName
 
-        private val INSERT_SLOT_JS = "javascript:window.utils.insertPlaceholder(%s);"
-        private val UPDATE_SLOT_JS = "javascript:window.utils.updatePlaceholder({" +
+        private val INSERT_SLOT_JS = "javascript:window.teads.insertPlaceholder(%s);"
+        private val UPDATE_SLOT_JS = "javascript:window.teads.updatePlaceholder({" +
                 "'offsetHeight':%s," +
                 "'ratioVideo':%s" +
                 "});"
-        private val OPEN_SLOT_JS = "javascript:window.utils.showPlaceholder();"
-        private val CLOSE_SLOT_JS = "javascript:window.utils.hidePlaceholder();"
-        private val UPDATE_POSITION_JS = "javascript:window.utils.sendTargetGeometry();"
+        private val OPEN_SLOT_JS = "javascript:window.teads.showPlaceholder();"
+        private val CLOSE_SLOT_JS = "javascript:window.teads.hidePlaceholder();"
+        private val UPDATE_POSITION_JS = "javascript:window.teads.sendTargetGeometry();"
     }
 
 }
