@@ -1,27 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollViewDemoVideo"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollViewDemoVideo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/article_header_row" />
-
-        <include layout="@layout/article_title_row" />
-
-        <include layout="@layout/article_real_lines" />
-
-        <include layout="@layout/article_fake_lines" />
-
-        <FrameLayout
-            android:id="@+id/adSlotView"
+        <LinearLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <include layout="@layout/article_fake_lines" />
-    </LinearLayout>
-</ScrollView>
+            <include layout="@layout/article_header_row" />
+
+            <include layout="@layout/article_title_row" />
+
+            <include layout="@layout/article_real_lines" />
+
+            <include layout="@layout/article_fake_lines" />
+
+            <FrameLayout
+                android:id="@+id/adSlotView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include layout="@layout/article_fake_lines" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- todo temp-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnInit"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnShow"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        android:text="init" />
+
+    <!-- todo temp-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnShow"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        app:layout_constraintStart_toEndOf="@id/btnInit"
+        app:layout_constraintEnd_toStartOf="@id/btnHide"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="show" />
+
+    <!-- todo temp-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnHide"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnShow"
+        app:layout_constraintEnd_toStartOf="@id/btnRemove"
+        android:text="hide" />
+
+    <!-- todo temp-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRemove"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="20dp"
+        app:layout_constraintStart_toEndOf="@id/btnHide"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="remove" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

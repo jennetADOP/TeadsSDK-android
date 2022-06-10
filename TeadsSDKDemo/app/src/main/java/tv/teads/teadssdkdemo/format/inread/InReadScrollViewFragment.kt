@@ -33,52 +33,70 @@ class InReadScrollViewFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        btnInit.setOnClickListener {
+            initAd()
+        }
+
+        btnShow.setOnClickListener {
+            container.visibility = View.VISIBLE
+        }
+
+        btnHide.setOnClickListener {
+            container.visibility = View.GONE
+        }
+
+        btnRemove.setOnClickListener {
+            adSlotView.removeAllViews()
+        }
+    }
+
+    private fun initAd() {
         // 1. Setup the settings
         val placementSettings = AdPlacementSettings.Builder()
-                .enableDebug()
-                .build()
+            .enableDebug()
+            .build()
 
         // 2. Create the InReadAdPlacement
         adPlacement = TeadsSDK.createInReadPlacement(requireActivity(), pid, placementSettings)
 
         // 3. Request the ad and register to the listener in it
         val requestSettings = AdRequestSettings.Builder()
-                .pageSlotUrl("http://teads.com")
-                .build()
+            .pageSlotUrl("http://teads.com")
+            .build()
         adPlacement.requestAd(requestSettings,
-                object : InReadAdListener {
-                    override fun adOpportunityTrackerView(trackerView: AdOpportunityTrackerView) {
-                        adSlotView.addView(trackerView)
-                    }
-
-                    override fun onAdReceived(inReadAdView: InReadAdView, adRatio: AdRatio) {
-                        this@InReadScrollViewFragment.inReadAdView = inReadAdView
-                        adSlotView.addView(inReadAdView, 0)
-                    }
-
-                    override fun onAdClicked() {}
-                    override fun onAdClosed() {}
-                    override fun onAdError(code: Int, description: String) {}
-                    override fun onAdImpression() {}
-                    override fun onAdExpandedToFullscreen() {}
-                    override fun onAdCollapsedFromFullscreen() {}
-                    override fun onAdRatioUpdate(adRatio: AdRatio) {}
-                    override fun onFailToReceiveAd(failReason: String) {}
-                },
-                object : VideoPlaybackListener {
-                    override fun onVideoComplete() {
-                        Log.d("PlaybackEvent", "complete")
-                    }
-
-                    override fun onVideoPause() {
-                        Log.d("PlaybackEvent", "pause")
-                    }
-
-                    override fun onVideoPlay() {
-                        Log.d("PlaybackEvent", "play")
-                    }
-
+            object : InReadAdListener {
+                override fun adOpportunityTrackerView(trackerView: AdOpportunityTrackerView) {
+                    adSlotView.addView(trackerView)
                 }
+
+                override fun onAdReceived(inReadAdView: InReadAdView, adRatio: AdRatio) {
+                    this@InReadScrollViewFragment.inReadAdView = inReadAdView
+                    adSlotView.addView(inReadAdView, 0)
+                }
+
+                override fun onAdClicked() {}
+                override fun onAdClosed() {}
+                override fun onAdError(code: Int, description: String) {}
+                override fun onAdImpression() {}
+                override fun onAdExpandedToFullscreen() {}
+                override fun onAdCollapsedFromFullscreen() {}
+                override fun onAdRatioUpdate(adRatio: AdRatio) {}
+                override fun onFailToReceiveAd(failReason: String) {}
+            },
+            object : VideoPlaybackListener {
+                override fun onVideoComplete() {
+                    Log.d("PlaybackEvent", "complete")
+                }
+
+                override fun onVideoPause() {
+                    Log.d("PlaybackEvent", "pause")
+                }
+
+                override fun onVideoPlay() {
+                    Log.d("PlaybackEvent", "play")
+                }
+
+            }
         )
     }
 

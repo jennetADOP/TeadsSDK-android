@@ -165,12 +165,12 @@ class SyncAdWebView(
     }
 
     override fun onSlotShow() {
-        containerAdView.visibility = View.VISIBLE
+        adLayer.visibility = View.VISIBLE
         Log.d(TAG, "onSlotChange: onSlotShow")
     }
 
     override fun onSlotHid() {
-        containerAdView.visibility = View.GONE
+        adLayer.visibility = View.GONE
         Log.d(TAG, "onSlotChange: onSlotHid")
     }
 
@@ -190,8 +190,9 @@ class SyncAdWebView(
     /**
      * Open the slot
      */
-    private fun displayAd() {
-        if (!opened) webviewHelper.openSlot()
+    fun displayAd() {
+        if (!opened)
+            webviewHelper.openSlot()
     }
 
     /**

@@ -67,6 +67,11 @@ class InReadWebViewFragment : BaseFragment(), SyncAdWebView.Listener {
         }
 
         // todo temp
+        btnShow.setOnClickListener {
+            webviewHelperSynch.displayAd()
+        }
+
+        // todo temp
         btnRemove.setOnClickListener {
             webviewHelperSynch.closeAd()
         }
